@@ -2,7 +2,7 @@ import {LOCALES} from '../locales'
 
 export default {
     [LOCALES.ENGLISH]:{
-        'Welcome':'Welcome',
+        'Welcome ,':'Welcome ,',
         'What is next in your Todo':'What is next in your Todo',
         'All':'All',
         'Active':'Active',

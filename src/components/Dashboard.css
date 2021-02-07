@@ -8,3 +8,11 @@
 .dashboard__logout {
   float: right;
 }
+.dashboard__footer {
+  justify-content: space-between;
+  display: flex;
+  margin: 20px;
+}
+.dashboard__theme {
+  display: grid;
+}
