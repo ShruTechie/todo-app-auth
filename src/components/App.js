@@ -8,6 +8,7 @@ import Login from "./Login"
 import PrivateRoute from "./PrivateRoute"
 import ForgotPassword from "./ForgotPassword"
 import UpdateProfile from "./UpdateProfile"
+import Todo from "./Todo"
 
 
 function App() {
@@ -17,7 +18,8 @@ function App() {
       style={{ minHeight: "100vh" }}
     >
       <div className="w-100" style={{ maxWidth: "80%" }}>
-        <Router>
+        <Todo/>
+        {/* <Router>
           <AuthProvider>
             <Switch>
               <PrivateRoute exact path="/" component={Dashboard} />
@@ -27,7 +29,7 @@ function App() {
               <Route path="/forgot-password" component={ForgotPassword} />
             </Switch>
           </AuthProvider>
-        </Router>
+        </Router> */}
       </div>
     </Container>
   )
