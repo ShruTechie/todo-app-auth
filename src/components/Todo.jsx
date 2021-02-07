@@ -57,7 +57,17 @@ const Todo = () => {
      },[active,completed])
       
    const clearCompletedData=()=>{
-      setCompleted([])
+       if(completed.length > 0){
+        const confirm = window.confirm('Are you sure want to clear completed todo data?')
+        if(confirm){
+         setCompleted([])
+         window.alert('Succefully cleared')
+        }
+       }else{
+           window.alert('Sorry, you dont have any completed data')
+       }
+      
+     
     }
 
     return (
@@ -112,43 +122,60 @@ const Todo = () => {
             <div className='todo__leftout'>
             {
                 status !== 'completed' && active && active.length > 0  ?  <span>{ `${active.length} items` }<FormattedMessage id='left'/> </span>
-                    :  status !== 'completed' ? <span>Ooops,you dont have any active todo's</span> :''
+                    :  status !== 'completed' ? <span>Ooops,you dont have any active todo's</span> : <span>0 items completed</span>
             }
             </div>
                 <hr/>
                     <div className='todos__button_conatiner'>
-                    <Button 
-                    type="button" class="btn btn-outline-primary"
-                    style={{background:theme}}
-                    onClick={()=>setStatus('all')}>
-                        <FormattedMessage id='All'/>
-                    </Button>
-                            &nbsp;
-                    <Button 
+                    <button 
+                     type="button" class="btn btn-outline-primary"
+                     style={{
+                         background:theme,
+                        backgroundColor:status === 'all' ? 'blue':'',
+                        color: status === 'all' ? 'white' :'black'
+                    }}
+                     onClick={()=>setStatus('all')}
+                     >   
+                    <FormattedMessage id='All'/>
+                    </button>
+                  &nbsp;
+                    <button 
                     type="button" class="btn btn-outline-primary"
                     onClick={()=>setStatus('active')}
-                    style={{background:theme}}
+                    style={{
+                        background:theme,
+                        backgroundColor:status === 'active' ? 'blue':'',
+                        color: status === 'active' ? 'white' :'black'
+                    }}
                     >
                      <FormattedMessage id='Active'/>
-              </Button>
+                </button>
                                 &nbsp;
 
-                        <Button
+                        <button
                         type="button" class="btn btn-outline-primary"
-                        style={{background:theme}}
+                        style={{
+                            background:theme,
+                            backgroundColor:status === 'completed' ? 'blue':'',
+                            color: status === 'completed' ? 'white' :'black'
+                        }}
                         onClick={()=>setStatus('completed')}>
                          <FormattedMessage id='Completed'/>
 
-                        </Button>
+                        </button>
                                     &nbsp;
 
-                    <Button 
+                    <button 
                     type="button" class="btn btn-outline-primary"
-                    style={{background:theme}}
+                    style={{
+                        background:theme,
+                        backgroundColor:status === 'clear completed' ? 'blue':'',
+                        color: status === 'clear completed' ? 'white' :'black'
+                    }}
                     onClick={clearCompletedData}>
-                                        <FormattedMessage id='Clear completed'/>
+                    <FormattedMessage id='Clear completed'/>
 
-                    </Button>
+                    </button>
                     </div>
                 </div>
           </div>
