@@ -1,0 +1,10 @@
+.card__panel-row {
+  text-transform: uppercase;
+  margin: 3%;
+  margin-left: -2%;
+}
+.todo__leftout {
+  color: red;
+  font-size: 24px;
+  text-align: right;
+}

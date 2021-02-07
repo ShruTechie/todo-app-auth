@@ -1,12 +1,16 @@
-import React, { useState } from "react"
-import { Card, Button, Alert, Input } from "react-bootstrap"
+import React, { useState} from "react"
+import { Card, Button, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
-import { Link, useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 import Todo from './Todo'
+import './Dashboard.css'
+import {I18nProvider, LOCALES} from '../i18n/index'
+import { FormattedMessage} from 'react-intl'
 
-
-export default function Dashboard() {
+ function Dashboard() {
   const [error, setError] = useState("")
+  const [language, setlanguage] = useState(LOCALES.ENGLISH);
+
   const { currentUser, logout } = useAuth()
   const history = useHistory()
 
@@ -21,30 +25,50 @@ export default function Dashboard() {
     }
   }
 
+ const handleChangeLang=(val)=>{
+    if(val === 'hi'){
+        setlanguage(LOCALES.HINDI)
+    }else{
+        setlanguage(LOCALES.ENGLISH)
+    }
+        
+ }
+
   return (
     <>
+    <I18nProvider locale={language}>
 
       <Card>
         <Card.Body>
-          <h2 className="text-center mb-4">Todo - app</h2>
           {error && <Alert variant="danger">{error}</Alert>}
-          <strong>Welcome:</strong> {currentUser.email}
-          <Button variant="link" onClick={handleLogout}>
-          Log Out
+        
+          <FormattedMessage id='Welcome'/>
+        <span>&nbsp; ,</span>
+          {currentUser.email}
+          <Button variant="link" onClick={handleLogout} className='dashboard__logout'>
+          <FormattedMessage id='logout'/>
         </Button>
-          {/* <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
-            Update Profile
-          </Link> */}
-          <Todo/>
-             
-            
+         
+        <h2 className="dashboard__header">todo -              <FormattedMessage id='application'/>
+</h2>
+
+          <Todo language={language}/>
+             <span> 
+             <FormattedMessage id='Change langauage'/>
+
+             </span>
+          <div  style={{marginTop:'3%'}}>
+                <select id="items" onClick={(e)=>handleChangeLang(e.target.value)}>
+                     <option value="en">English</option>
+                    <option value="hi">Hindi</option>
+                  </select>
+        </div>
 
         </Card.Body>
       </Card>
-      {/* <div className="w-100 text-center mt-2">
-      
-      </div> */}
-
-    </>
+      </I18nProvider>
+        </>
   )
 }
+
+export default Dashboard;

@@ -1,12 +1,13 @@
 import React, { useState ,useEffect} from 'react'
 import { Button } from 'react-bootstrap';
+import './todo.css'
+import { FormattedMessage} from 'react-intl'
+import {I18nProvider, LOCALES} from '../i18n/index'
 
-const Todo = () => {
+const Todo = ({language}) => {
     
     const [namsstore, setnamsstore] = useState('');
     const [display, setdisplay] = useState(true);
-    const [id, setid] = useState('');
-    const [language, setlanguage] = useState('english');
     const [status,setStatus]=useState('active')
     const [completed,setCompleted]=useState([])
     const [active,setActive]=useState([])
@@ -59,10 +60,10 @@ const Todo = () => {
    const clearCompletedData=()=>{
       setCompleted([])
     }
-        
 
-     console.log(renderData);
     return (
+        <I18nProvider locale={language}>
+
         <div className="container">
             <div className="row">
 
@@ -72,7 +73,11 @@ const Todo = () => {
                         <form >
                             <div className="row">
                                 <div className="input-field col s12">
-                                    <input placeholder="what is next in your Todo" id="first_name"  value={namsstore} onChange={(event)=>   setnamsstore(event.target.value)   } type="text" className="validate" />
+                                    <input 
+                                    placeholder={language === 'hi-in' ? 'आपके todo में आगे क्या है' :'What is next in your Todo' }
+                                    id="first_name"  
+                                     class="form-control"
+                                    value={namsstore} onChange={(event)=>   setnamsstore(event.target.value)   } type="text" />
                           
                                 </div>
                                 <div className="input-field col l2 s12">
@@ -87,11 +92,11 @@ const Todo = () => {
                         {
                          renderData && renderData.map((item,index)=>{
                                 return(
-                                    <div className="card-panel row" key={index}>
+                                    <div className="card__panel-row" key={index}>
                                         <div style={{display:'flex'}}>
-                                              <input type="checkbox" aria-label="Checkbox for following text input"/>
+                                          
 
-                                        <div class="blue-text text-darken-2 col s8">{item.value}</div>
+                                        <div class="blue-text text-darken-2 col s8">{item.value.toUpperCase()}</div>
                                         {
 status !== 'completed' ?   <div className="col l2 s6" > 
                                                                     <button type="button" class="close" aria-label="Close" onClick={()=>Deletehandler(index)} >
@@ -102,7 +107,7 @@ status !== 'completed' ?   <div className="col l2 s6" >
                                         }
                                    
                                </div>
-                               <hr style={{color:'red'}}/>
+                               <hr/>
                                     </div>
 
                                 )
@@ -111,13 +116,11 @@ status !== 'completed' ?   <div className="col l2 s6" >
                      
                     </div>
 <div>
-    <hr/>
-    <div>
-    <input type="checkbox" aria-label="Checkbox for following text input"/>
-    <span>Check All</span>
+    
+    <div className='todo__leftout'>
     {
-        status !== 'completed' ?     <span> {active && active.length} items left</span>
-            :''
+        status !== 'completed' && active && active.length > 0  ?  <span> {active.length > 0} items <FormattedMessage id='left'/> </span>
+            :  status !== 'completed' ? <span>Ooops,you dont have any active todo's</span> :''
     }
     </div>
 
@@ -125,50 +128,57 @@ status !== 'completed' ?   <div className="col l2 s6" >
     <Button 
      type="button" class="btn btn-outline-primary"
      style={{background:theme}}
-    onClick={()=>setStatus('all')}>All</Button>
+    onClick={()=>setStatus('all')}>
+        <FormattedMessage id='All'/>
+    </Button>
             &nbsp;
     <Button 
      type="button" class="btn btn-outline-primary"
     onClick={()=>setStatus('active')}
     style={{background:theme}}
-    >Active</Button>
+    >
+                <FormattedMessage id='Active'/>
+
+        
+        </Button>
                 &nbsp;
 
     <Button
      type="button" class="btn btn-outline-primary"
      style={{background:theme}}
-    onClick={()=>setStatus('completed')}>Completed</Button>
+    onClick={()=>setStatus('completed')}>
+                        <FormattedMessage id='Completed'/>
+
+    </Button>
                 &nbsp;
 
     <Button 
      type="button" class="btn btn-outline-primary"
      style={{background:theme}}
-    onClick={clearCompletedData}>Clear completed</Button>
+    onClick={clearCompletedData}>
+                        <FormattedMessage id='Clear completed'/>
+
+       </Button>
     </div>
     <div style={{marginTop:'3%'}}>
         <div>
             <button>
             <input id="colorPicker" type="color" onChange={(e)=>setTheme(e.target.value)}  />
-
-                Select theme</button>
+            <FormattedMessage id='Change theme'/>
+             </button>
 
         </div>
 
     </div>
     
-<span style={{color:'green'}} >Selected lang {language}</span>
 
 </div>
-<div  style={{marginTop:'3%'}}>
-<select id="items" onClick={(e)=>setlanguage(e.target.value)}>
-                        <option value="english">English</option>
-                        <option value="hindi">Hindi</option>
-                  </select>
-</div>
+
                    
                 </div>
             </div>
         </div>
+        </I18nProvider>
     )
 }
 

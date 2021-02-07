@@ -1,0 +1,10 @@
+.dashboard__header {
+  color: royalblue;
+  font-size: 36px;
+  text-align: center;
+  text-transform: capitalize;
+  padding: 10px;
+}
+.dashboard__logout {
+  float: right;
+}
