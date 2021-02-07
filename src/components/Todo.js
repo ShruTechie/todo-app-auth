@@ -12,6 +12,7 @@ const Todo = () => {
     const [active,setActive]=useState([])
     const [allData, setAllData] = useState([]);
     const[renderData,setRenderData]=useState([])
+    const[theme,setTheme]=useState('')
 
     useEffect(()=>{
         if(status === 'active'){
@@ -123,19 +124,36 @@ status !== 'completed' ?   <div className="col l2 s6" >
     <div>
     <Button 
      type="button" class="btn btn-outline-primary"
+     style={{background:theme}}
     onClick={()=>setStatus('all')}>All</Button>
+            &nbsp;
     <Button 
      type="button" class="btn btn-outline-primary"
-    onClick={()=>setStatus('active')}>Active</Button>
+    onClick={()=>setStatus('active')}
+    style={{background:theme}}
+    >Active</Button>
+                &nbsp;
+
     <Button
      type="button" class="btn btn-outline-primary"
+     style={{background:theme}}
     onClick={()=>setStatus('completed')}>Completed</Button>
+                &nbsp;
+
     <Button 
      type="button" class="btn btn-outline-primary"
+     style={{background:theme}}
     onClick={clearCompletedData}>Clear completed</Button>
     </div>
     <div style={{marginTop:'3%'}}>
-    <Button>Change theme</Button>
+        <div>
+            <button>
+            <input id="colorPicker" type="color" onChange={(e)=>setTheme(e.target.value)}  />
+
+                Select theme</button>
+
+        </div>
+
     </div>
     
 <span style={{color:'green'}} >Selected lang {language}</span>
